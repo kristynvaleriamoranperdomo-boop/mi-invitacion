@@ -3,77 +3,67 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Boda Víctor & Estiven</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
-
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@400;600&display=swap');
 
-/* ===== AJUSTES IPHONE ===== */
-html, body {
-  height: 100%;
-}
-
+/* ===== BODY CENTRADO ===== */
 body {
   margin: 0;
   font-family: 'Cormorant Garamond', serif;
-  min-height: -webkit-fill-available;
-  overflow-x: hidden;
+  background: linear-gradient(rgba(130, 166, 127, 0.575), rgba(255,255,255,0.65)),
+    url('https://fabricbistro.com/cdn/shop/products/2_c234bf26-d5b6-4ec0-886b-1faf6fc446e2_1024x1024@2x.jpg?v=1620663601') center/cover fixed;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: center;   /* centrado horizontal */
+  align-items: center;       /* centrado vertical */
+  min-height: 100vh;         /* ocupa toda la altura de la pantalla */
+  overflow-x: hidden;
   flex-direction: column;
-
-  background:
-  linear-gradient(rgba(130,166,127,0.55), rgba(255,255,255,0.65)),
-  url('https://fabricbistro.com/cdn/shop/products/2_c234bf26-d5b6-4ec0-886b-1faf6fc446e2_1024x1024@2x.jpg?v=1620663601')
-  center / cover no-repeat;
 }
 
 /* ===== PORTADA ===== */
 .cover {
   position: fixed;
   inset: 0;
-  background:
-  linear-gradient(rgba(255,255,255,0.75), rgba(255,255,255,0.75)),
-  url('https://previews.123rf.com/images/magenta10/magenta102009/magenta10200900011/155232071-vintage-beige-ornamental-background-embossed-paper-texture-seamless-pattern-in-neutral-color.jpg')
-  center / cover no-repeat;
-
+  background: linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)),
+    url('https://previews.123rf.com/images/magenta10/magenta102009/magenta10200900011/155232071-vintage-beige-ornamental-background-embossed-paper-texture-seamless-pattern-in-neutral-color.jpg') no-repeat center center;
+  background-size: cover;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
   z-index: 100;
-  transition: 0.8s ease;
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
-
 .cover.hide {
   opacity: 0;
   pointer-events: none;
   transform: scale(0.95);
 }
-
 .cover h1 {
   font-family: 'Great Vibes', cursive;
   font-size: 3rem;
   color: #5f6f3e;
   margin: 0;
 }
-
 .cover p {
   color: #7b8a55;
-  margin: 0.5rem 0 1.5rem;
+  margin: 0.5rem 0 1.2rem 0;
 }
-
 .cover button {
-  padding: 0.8rem 2.2rem;
+  padding: 0.8rem 2rem;
   border-radius: 30px;
   border: 1px solid #5f6f3e;
   background: transparent;
   color: #5f6f3e;
   font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.cover button:hover {
+  background: #5f6f3e;
+  color: white;
 }
 
 /* ===== PÉTALOS ===== */
@@ -83,130 +73,137 @@ body {
   pointer-events: none;
   z-index: 1;
 }
-
 .petal {
   position: absolute;
   top: -10%;
   background: radial-gradient(circle at 30% 30%, #a7b08a, #5f6f3e);
   border-radius: 60% 40% 60% 40%;
-  opacity: 0.45;
-  animation: fall linear infinite;
+  opacity: 0.5;
+  animation: fallPetal linear infinite;
+}
+@keyframes fallPetal {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(120vh) rotate(360deg); opacity: 0; }
 }
 
-@keyframes fall {
-  to {
-    transform: translateY(120vh) rotate(360deg);
-    opacity: 0;
-  }
-}
-
-/* ===== TARJETA ===== */
+/* ===== TARJETA CON BORDE ESTILIZADO ===== */
 .invitation {
-  background: white;
+  background: #ffffff;
   border-radius: 22px;
-  max-width: 360px;
+  max-width: 350px;
   width: 85%;
-  padding: 2rem 1.6rem;
+  padding: 2rem 1.5rem;
   text-align: center;
   position: relative;
   z-index: 10;
 
-  box-shadow: 0 12px 35px rgba(107,116,67,.35);
+  /* Borde más notable y estilizado */
+  border: 4px solid transparent;
+  background-clip: padding-box;
+  box-shadow: 0 0 0 4px #ffffff, 0 12px 30px rgba(107,116,67,0.35);
 
-  animation:
-    showCard 1s ease forwards,
-    floatCard 6s ease-in-out infinite;
+  /* Animación inicial y flotante */
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+  animation: showCard 1s ease forwards 0.5s, floatCard 6s ease-in-out infinite;
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+.invitation:hover {
+  transform: translateY(0) scale(1.02);
+  box-shadow: 0 18px 45px rgba(107, 116, 67, 0.695);
 }
 
+/* Animación de entrada */
 @keyframes showCard {
-  from {opacity:0; transform:translateY(30px) scale(.95);}
-  to {opacity:1; transform:none;}
+  0% { opacity: 0; transform: translateY(30px) scale(0.95); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 
+/* Animación flotante */
 @keyframes floatCard {
-  50% { transform: translateY(-8px); }
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-8px) scale(1.005); }
 }
 
-/* BORDE */
+/* Borde degradado decorativo */
 .invitation::before {
-  content:"";
-  position:absolute;
-  inset:-4px;
-  border-radius:26px;
-  background:linear-gradient(135deg,#e2e6b9,#ffffff,#e2e6b9);
-  z-index:-1;
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  z-index: -1;
+  border-radius: 26px;
+  background: linear-gradient(135deg, #e2e6b9c8, #ffffff, #e2e6b9c8);
 }
-
-/* FLOR */
+/* FLORES */
+.invitation::before,
 .invitation::after {
-  content:"";
-  position:absolute;
-  width:70px;
-  height:70px;
-  right:-10px;
-  bottom:-10px;
-  background-image:url('https://static.vecteezy.com/system/resources/thumbnails/048/870/076/small_2x/watercolor-border-illustration-with-green-gold-leaves-white-flowers-png.png');
-  background-size:contain;
-  background-repeat:no-repeat;
+  content: "";
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.invitation::before {
+  top: -10px;
+  left: -10px;
+  background-image: url('https://static.vecteezy.com/system/resources/thumbnails/048/870/076/small_2x/watercolor-border-illustration-with-green-gold-leaves-white-flowers-png.png');
+}
+.invitation::after {
+  bottom: -10px;
+  right: -10px;
+  background-image: url('https://static.vecteezy.com/system/resources/thumbnails/048/870/076/small_2x/watercolor-border-illustration-with-green-gold-leaves-white-flowers-png.png');
 }
 
-/* ===== TEXTOS ===== */
-.initials,
-.names {
-  font-family:'Great Vibes', cursive;
-  color:#5f6f3e;
-}
+/* ===== TEXTOS MÁS PEQUEÑOS ===== */
+.initials { font-family: 'Great Vibes', cursive; font-size: 2rem; color: #5f6f3e; }
+.names { font-family: 'Great Vibes', cursive; font-size: 2rem; color: #4f5f3a; margin: 1rem 0; }
+.quote { font-style: italic; font-size: 0.85rem; color: #7b8a55; margin: 1rem 0; }
+.text { font-size: 0.9rem; margin-bottom: 1rem; }
+.countdown { font-weight: 600; color: #5f6f3e; margin: 1rem 0; }
+.date .day { font-size: 2rem; font-weight: 600; color: #4f5f3a; }
+.date .month, .date .year { font-size: 0.85rem; letter-spacing: 2px; }
+.place { font-size: 0.8rem; margin-top: 0.5rem; }
 
-.initials { font-size:2rem; }
-.names { font-size:2.1rem; margin:1rem 0; }
-
-.quote {
-  font-style:italic;
-  font-size:.9rem;
-  color:#7b8a55;
-}
-
-.text { font-size:.95rem; }
-
-.countdown {
-  font-weight:600;
-  color:#5f6f3e;
-  margin:1rem 0;
-}
-
-.date .day {
-  font-size:2rem;
-  color:#4f5f3a;
-}
-
-.place {
-  font-size:.85rem;
-}
-
-/* ===== ICONOS ===== */
-.icons {
-  display:flex;
-  justify-content:space-around;
-  margin-top:1.5rem;
-}
-
+/* ICONOS */
+.icons { display: flex; justify-content: space-around; margin-top: 1.5rem; }
+.icon { font-size: 0.8rem; color: #4f5f3a; text-align: center; }
 .icon a {
-  display:block;
-  width:48px;
-  height:48px;
-  border:2px solid #5f6f3e;
-  border-radius:50%;
-  line-height:44px;
-  text-decoration:none;
-  color:#5f6f3e;
-  font-size:1.2rem;
+  display: block;
+  width: 50px;
+  height: 50px;
+  border: 2px solid #5f6f3e;
+  border-radius: 50%;
+  line-height: 46px;
+  margin: 0 auto 0.4rem;
+  text-decoration: none;
+  color: #5f6f3e;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: 0.3s;
 }
+.icon a:hover { background: #5f6f3e; color: white; }
 
-/* ===== RESPONSIVE ===== */
-@media (max-width:480px) {
-  .names {font-size:1.7rem;}
+/* ===== RESPONSIVE MÓVIL ===== */
+@media (max-width: 480px) {
+  .invitation {
+    padding: 1.5rem 1rem;
+    width: 80%;
+    border-radius: 18px;
+  }
+  .initials { font-size: 1.8rem; }
+  .names { font-size: 1.6rem; }
+  .quote { font-size: 0.8rem; }
+  .text { font-size: 0.85rem; }
+  .countdown { font-size: 0.8rem; }
+  .date .day { font-size: 1.8rem; }
+  .date .month, .date .year { font-size: 0.8rem; }
+  .place { font-size: 0.75rem; }
+  .icon a { width: 45px; height: 45px; line-height: 41px; font-size: 1.1rem; }
 }
-
 </style>
 </head>
 
@@ -219,112 +216,100 @@ body {
   <button onclick="openInvite()">Ver invitación</button>
 </div>
 
+<!-- PÉTALOS -->
 <div class="petals"></div>
 
 <!-- INVITACIÓN -->
 <div class="invitation">
+  <div class="initials">V & E</div>
 
-<div class="initials">V & E</div>
-
-<div class="quote">
-“Así que ya no son dos, sino uno solo.<br>
-Lo que Dios ha unido, que no lo separe el hombre.”<br>
-<strong>Mateo 19:6</strong>
-</div>
-
-<div class="text">
-Con la bendición de Dios,<br>
-tenemos el honor de invitarte a celebrar<br>
-nuestro matrimonio
-</div>
-
-<div class="names">Víctor & Estiven</div>
-
-<div class="countdown" id="countdown"></div>
-
-<div class="date">
-  <div class="month">AGOSTO</div>
-  <div class="day">29</div>
-  <div class="year">2026</div>
-  <div>14:30 hrs</div>
-</div>
-
-<div class="place">
-<strong>Muelle Ereaga Kaia, 4, 1ª Planta</strong><br>
-48992 Algorta, Biscay<br>
-Bilbao, España
-</div>
-
-<div class="icons">
-  <div class="icon">
-    <a href="https://www.google.com/maps?q=Muelle+Ereaga+Kaia+4+Algorta+Bilbao" target="_blank">⚲</a>
-    Ubicación
+  <div class="quote">
+    “Así que ya no son dos, sino uno solo.<br>
+    Lo que Dios ha unido, que no lo separe el hombre.”<br>
+    <strong>Mateo 19:6</strong>
   </div>
-  <div class="icon">
-    <a href="https://wa.me/34624689330?text=Confirmo%20mi%20asistencia%20a%20la%20Boda%20de%20Victor%20y%20Estiven." target="_blank">✔</a>
-    Confirmar
-  </div>
-  <div class="icon">
-    <a href="#" onclick="alert('Tu presencia es nuestro mayor regalo.\nSi deseas tener un detalle con nosotros, agradecemos lluvia de sobres.');return false;">✉</a>
-    Regalos
-  </div>
-</div>
 
-<audio id="music" loop>
-  <source src="https://www.bensound.com/bensound-music/bensound-tenderness.mp3" type="audio/mpeg">
-</audio>
+  <div class="text">
+    Con la bendición de Dios,<br>
+    tenemos el honor de invitarte a celebrar<br>
+    nuestro matrimonio
+  </div>
 
+  <div class="names">Víctor & Estiven</div>
+
+  <div class="countdown" id="countdown"></div>
+
+  <div class="date">
+    <div class="month">AGOSTO</div>
+    <div class="day">29</div>
+    <div class="year">2026</div>
+    <div>14:30 hrs</div>
+  </div>
+
+  <div class="place">
+    <strong>Muelle Ereaga Kaia, 4, 1ª Planta</strong><br>
+    48992 Algorta, Biscay<br>
+    Bilbao, España
+  </div>
+
+  <div class="icons">
+    <div class="icon">
+      <a href="https://www.google.com/maps?q=Muelle+Ereaga+Kaia+4+Algorta+Bilbao" target="_blank">⚲</a>
+      Ubicación
+    </div>
+    <div class="icon">
+      <a href="https://wa.me/34624689330?text=Confirmo%20mi%20asistencia%20a%20la%20Boda%20de%20Victor%20y%20Estiven." target="_blank">✔</a>
+      Confirmar
+    </div>
+    <div class="icon">
+      <a href="#" onclick="showGiftMessage(); return false;">✉</a>
+      Regalos
+    </div>
+  </div>
+
+  <!-- MÚSICA -->
+  <audio id="music" loop src="https://www.bensound.com/bensound-music/bensound-tenderness.mp3"></audio>
 </div>
 
 <script>
-function openInvite(){
-  document.getElementById("cover").classList.add("hide");
-
-  const music = document.getElementById("music");
-  music.volume = 0.8;
-
-  music.play().catch(()=>{
-    document.body.addEventListener("touchstart",()=>{
-      music.play();
-    },{once:true});
-  });
+/* PORTADA Y MÚSICA */
+function openInvite() {
+  document.getElementById('cover').classList.add('hide');
+  const music = document.getElementById('music');
+  music.play().catch(()=>console.log("Toca la pantalla para reproducir la música"));
 }
 
 /* CONTADOR */
 const weddingDate = new Date("August 29, 2026 14:30:00").getTime();
-
-setInterval(()=>{
+setInterval(() => {
   const now = new Date().getTime();
   const d = weddingDate - now;
-
-  if(d <= 0){
-    document.getElementById("countdown").innerHTML = "¡Hoy es el gran día!";
-    return;
-  }
-
-  const days = Math.floor(d / (1000*60*60*24));
-  const h = Math.floor((d % (1000*60*60*24)) / (1000*60*60));
-  const m = Math.floor((d % (1000*60*60)) / (1000*60));
-  const s = Math.floor((d % (1000*60)) / 1000);
-
-  document.getElementById("countdown").innerHTML =
-  Faltan ${days} días · ${h}h ${m}m ${s}s;
-},1000);
+  if(d<0){ document.getElementById("countdown").innerHTML = "¡Ya es el gran día!"; return; }
+  const days = Math.floor(d/(1000*60*60*24));
+  const h = Math.floor((d % (1000*60*60*24))/(1000*60*60));
+  const m = Math.floor((d % (1000*60*60))/(1000*60));
+  const s = Math.floor((d % (1000*60))/1000);
+  document.getElementById("countdown").innerHTML = `Faltan ${days} días · ${h}h ${m}m ${s}s`;
+}, 1000);
 
 /* PÉTALOS */
-const petals = document.querySelector(".petals");
-const total = window.innerWidth < 768 ? 8 : 14;
+const petalsContainer = document.querySelector('.petals');
+const count = window.innerWidth < 768 ? 8 : 14;
+for(let i=0;i<count;i++){
+  const p=document.createElement('span');
+  p.className='petal';
+  const size = Math.random() * 12 + 10;
+  p.style.width = size+'px';
+  p.style.height = size+'px';
+  p.style.left = Math.random() * 100 + '%';
+  p.style.animationDuration = (Math.random()*12 + 12)+'s';
+  p.style.animationDelay = Math.random()*5+'s';
+  petalsContainer.appendChild(p);
+}
 
-for(let i=0;i<total;i++){
-  const p = document.createElement("span");
-  p.className = "petal";
-  const size = Math.random()*12+10;
-  p.style.width = size+"px";
-  p.style.height = size+"px";
-  p.style.left = Math.random()*100+"%";
-  p.style.animationDuration = (Math.random()*12+10)+"s";
-  p.style.animationDelay = Math.random()*5+"s";
-  petals.appendChild(p);
+/* BOTÓN REGALOS */
+function showGiftMessage() {
+  alert("Tu presencia es nuestro mayor regalo.\nSi deseas tener un detalle con nosotros, agradecemos lluvia de sobres.");
 }
 </script>
 
